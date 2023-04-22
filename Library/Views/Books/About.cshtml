@@ -1,0 +1,45 @@
+@using Library.Services.Enum
+@model BookViewModel
+
+@{
+    ViewBag.Title = "Подробнее";
+    Layout = "_Layout";
+}
+
+<div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+    <div class="col">
+        <div class="card h-100">
+            <img src="@Model.ImgPath" class="p-2 card-img-top" alt="@Model.Title">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Title</h5>
+                <p>Автор: @Model.Author</p>
+                <p>Статус: @Model.States.GetDescription()</p>
+                <p>Описание: @Model.Description</p>
+                <p>Год выпуска: @Model.YearRelease</p>
+                <p>Категория: @Model.Category.Title</p>
+            </div>
+            <div class="row px-3">
+                <div class="col-auto">
+                    <a class="my-3 btn btn-outline-info"
+                       asp-action="Edit"
+                       asp-controller="Books"
+                       asp-route-id="@Model.Id">
+                        Изменить
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a class="my-3 btn btn-danger"
+                       asp-action="Delete"
+                       asp-controller="Books"
+                       asp-route-id="@Model.Id">
+                        Удалить
+                    </a>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Добавлено: @Model.DateAdded</small>
+            </div>
+        </div>
+    </div>
+</div>
+

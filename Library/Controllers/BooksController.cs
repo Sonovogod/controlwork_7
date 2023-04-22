@@ -46,14 +46,16 @@ public class BooksController : Controller
             _bookService.Add(book);
             return RedirectToAction("Home");
         }
-        /*ModelState.AddModelError("Img", "Не верное расширение файла");*/
         return RedirectToAction("CreateBook");
     }
     
     [HttpGet]
     public IActionResult About(int id)
     {
-        return NotFound();
+        BookViewModel? bookViewModel = _bookService.GetById(id);
+        if (bookViewModel is null) return NotFound();
+
+        return View(bookViewModel);
     }
 
     [HttpGet]
@@ -62,4 +64,27 @@ public class BooksController : Controller
         return NotFound();
     }
     
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        BookViewModel? bookViewModel = _bookService.GetById(id);
+        if (bookViewModel is null) return NotFound();
+        Book? book = bookViewModel.MapToBookModel();
+        _bookService.DeleteBook(book);
+        
+        return RedirectToAction("Home");
+    }
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        BookViewModel? bookViewModel = _bookService.GetById(id);
+        if (bookViewModel is null) return NotFound();
+        CreateBookViewModel createBookViewModel = new CreateBookViewModel()
+        {
+            Book = bookViewModel,
+            Categories = _categoryService.GetAll()
+        };
+        
+        return View(createBookViewModel);
+    }
 }

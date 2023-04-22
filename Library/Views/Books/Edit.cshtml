@@ -1,0 +1,86 @@
+@model CreateBookViewModel
+
+@{
+    ViewBag.Title = "Редактирование книги";
+    Layout = "_Layout";
+}
+
+<h2>Запоните поля для редактирования книги</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="CreateBook" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label for="bookTitle" class="mb-2">Название книги</label>
+                <input asp-for="Book.Title"
+                       type="text"
+                       class="form-control"
+                       id="bookTitle"
+                       placeholder="Успешный программист"
+                       value="@Model.Book.Title">
+                <span class="text-danger" asp-validation-for="Book.Title"></span>
+            </div>
+            <div class="form-group mb-3">
+                <select asp-for="Book.CategoryId" class="form-select">
+                    @if (!Model.Categories.Any())
+                    {
+                        <option selected>Категории еще не созданы</option>
+                    }
+                    else
+                    {
+                        <option selected>Выберите категорию</option>
+                        <option selected value="@Model.Book.Category.Title">@Model.Book.Category.Title</option>
+                        foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Id">@category.Title</option>
+                        }
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="Book.CategoryId"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="bookDesc" class="mb-2">Описание</label>
+                <textarea asp-for="Book.Description"
+                       type="text"
+                       class="form-control"
+                       id="bookDesc"
+                       placeholder="Это произведение рассказывет нам о том о сем..."
+                        value="@Model.Book.Description">
+                </textarea>
+                <span class="text-danger" asp-validation-for="Book.Description"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="bookAuthor" class="mb-2">Автор книги</label>
+                <input asp-for="Book.Author"
+                       type="text"
+                       class="form-control"
+                       id="bookAuthor"
+                       placeholder="Писарев Писарь Писареевич"
+                       value="@Model.Book.Author">
+                <span class="text-danger" asp-validation-for="Book.Author"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="bookYearRelease" class="mb-2">Дата выпуска</label>
+                <input asp-for="Book.YearRelease"
+                       type="text"
+                       class="form-control"
+                       id="bookYearRelease"
+                       placeholder="1998"
+                       value="@Model.Book.YearRelease">
+                <span class="text-danger" asp-validation-for="Book.YearRelease"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="mb-2" for="inputGroupFile01">Обложка</label>
+                <input type="file" class="form-control" id="inputGroupFile01" name="uploadedFile">
+            </div>
+            <input type="hidden" value="@Model.Book.Id" asp-for="Book.Id">
+            <input type="hidden" value="@Model.Book.DateAdded" asp-for="Book.Id">
+            <button type="submit" class="btn btn-outline-info mt-3">Изменить</button>
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

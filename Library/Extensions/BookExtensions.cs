@@ -29,4 +29,22 @@ public static class BookExtensions
             CategoryId = bookViewModel.CategoryId
         };
     }
+    
+    public static BookViewModel MapTotBookViewModel(this Book book)
+    {
+        return new BookViewModel
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Description = book.Description,
+            YearRelease = book.YearRelease,
+            CategoryId = book.CategoryId,
+            DateAdded = book.DateAdded,
+            User = book.User,
+            Author = book.Author,
+            ImgPath = book.ImgPath,
+            States = book.States,
+            Category = book.Category
+        };
+    }
 }

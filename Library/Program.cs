@@ -11,6 +11,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<LibraryContext>(options =>
 {
     options.UseNpgsql(connection);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddScoped<IBookService, BookService>(); 

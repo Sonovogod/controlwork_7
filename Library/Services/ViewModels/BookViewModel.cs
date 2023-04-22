@@ -27,4 +27,5 @@ public class BookViewModel
     public DateTime? DateAdded { get; set; }
     public BookStates? States { get; set; }
     public User? User { get; set; }
+    public Category? Category { get; set; }
 }

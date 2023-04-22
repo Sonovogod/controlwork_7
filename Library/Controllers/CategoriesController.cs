@@ -33,7 +33,7 @@ public class CategoriesController : Controller
             Category category = createCategoryViewModel.Category.MapToCategoryModel();
             _categoryService.Add(category);
         }
-        return View(createCategoryViewModel);
+        return RedirectToAction("CreateCategory");
     }
 
     [HttpGet]

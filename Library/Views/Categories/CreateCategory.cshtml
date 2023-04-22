@@ -1,0 +1,52 @@
+@model CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "Категории";
+    Layout = "_Layout";
+}
+
+@if (Model.Categories.Any())
+{
+    <h2>Существующие категории</h2>
+    <table class="table" style="width: 100%;">
+        <tr>
+            <th>#ID</th>
+            <th>Наименование</th>
+            <th>Действие</th>
+        </tr>
+    @foreach (var category in Model.Categories)
+    {
+        <tr>
+            <td>@category.Id</td>
+            <td>@category.Title</td>
+            <td><a asp-controller="Categories"
+                   asp-action="Delete"
+                   asp-route-id="@category.Id" class="my-3 btn btn-danger d-inline">Удалить</a></td>
+        </tr>
+    }
+    </table>
+}
+<h2>Заполните поле для добавления новой категории</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="CreateCategory" method="post" asp-controller="Categories">
+            <div class="form-group mb-3">
+                <label for="name">Наименование категории</label>
+                <input asp-for="Category.Title"
+                       type="text"
+                       class="form-control"
+                       id="name"
+                       placeholder="Хоррор">
+                <span class="text-danger" asp-validation-for="Category.Title"></span>
+            </div>
+            <button type="submit" class="btn btn-outline-info mt-3">Добавить</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

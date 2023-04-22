@@ -16,4 +16,17 @@ public static class BookExtensions
             States = b.States
         }).ToList();
     }
+    
+    public static Book MapToBookModel(this BookViewModel bookViewModel)
+    {
+        return new Book()
+        {
+            Id = bookViewModel.Id,
+            Title = bookViewModel.Title,
+            Description = bookViewModel.Description,
+            Author = bookViewModel.Author,
+            YearRelease = bookViewModel.YearRelease,
+            CategoryId = bookViewModel.CategoryId
+        };
+    }
 }

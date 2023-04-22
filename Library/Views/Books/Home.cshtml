@@ -1,3 +1,4 @@
+@using Library.Services.Enum
 @model List<ShortBookViewModel>
 
 @{
@@ -21,7 +22,7 @@
                     <div class="card-body">
                         <h5 class="card-title">@book.Title</h5>
                         <p>Автор: @book.Author</p>
-                        <p>Статус: @book.States</p>
+                        <p>Статус: @book.States.GetDescription()</p>
                     </div>
                     <div class="row px-3">
                         <div class="col-auto">

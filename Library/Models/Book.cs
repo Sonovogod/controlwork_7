@@ -13,7 +13,7 @@ public class Book
     public DateTime DateAdded { get; set; }
     public BookStates States { get; set; }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
     public User User { get; set; }
     
     public int CategoryId { get; set; }

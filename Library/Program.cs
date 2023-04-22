@@ -15,6 +15,7 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddScoped<IBookService, BookService>(); 
 builder.Services.AddScoped<ICategoryService, CategoryService>(); 
+builder.Services.AddScoped<IFileService, FileService>(); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

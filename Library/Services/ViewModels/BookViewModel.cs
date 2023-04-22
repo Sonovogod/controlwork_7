@@ -28,4 +28,5 @@ public class BookViewModel
     public BookStates? States { get; set; }
     public User? User { get; set; }
     public Category? Category { get; set; }
+    public int? UserId { get; set; }
 }

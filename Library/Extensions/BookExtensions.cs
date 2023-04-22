@@ -26,7 +26,11 @@ public static class BookExtensions
             Description = bookViewModel.Description,
             Author = bookViewModel.Author,
             YearRelease = bookViewModel.YearRelease,
-            CategoryId = bookViewModel.CategoryId
+            CategoryId = bookViewModel.CategoryId,
+            ImgPath = bookViewModel.ImgPath,
+            DateAdded = bookViewModel.DateAdded,
+            States = bookViewModel.States,
+            UserId = bookViewModel.UserId
         };
     }
     

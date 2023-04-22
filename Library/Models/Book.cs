@@ -1,3 +1,5 @@
+using Library.Enums;
+
 namespace Library.Models;
 
 public class Book
@@ -9,7 +11,7 @@ public class Book
     public string ImgPath { get; set; }
     public DateTime DateRelease { get; set; }
     public DateTime DateAdded { get; set; }
-    public bool IsDelete { get; set; }
+    public BookStates States { get; set; }
 
     public int UserId { get; set; }
     public User User { get; set; }

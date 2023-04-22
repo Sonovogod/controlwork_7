@@ -1,4 +1,6 @@
 using Library.Models;
+using Library.Services;
+using Library.Services.Abstracts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,8 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<LibraryContext>(options => options.UseNpgsql(connection));
-
+builder.Services.AddDbContext<LibraryContext>(options =>
+{
+    options.UseNpgsql(connection);
+});
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+builder.Services.AddScoped<IBookService, BookService>(); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

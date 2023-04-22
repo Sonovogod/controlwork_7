@@ -22,7 +22,8 @@ public class BookViewModel
     [Required(ErrorMessage = "Поле не может быть пустым")]
     [Remote("CheckYear", "BookValidation", ErrorMessage = "Дата написания не должна быть старее 1000 года и не больше текущего года", AdditionalFields = "YearRelease")]
     public int YearRelease { get; set; }
-    [Required(ErrorMessage = "Поле не может быть пустым")]
+    [Remote("CheckCategory", "BookValidation", ErrorMessage = "Необходимо выбрать категорию", AdditionalFields = "CategoryId")]
+
     public int CategoryId { get; set; }
     public DateTime? DateAdded { get; set; }
     public BookStates? States { get; set; }

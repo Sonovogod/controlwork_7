@@ -8,4 +8,5 @@ public interface IBookService
     public void Add(Book book);
     public BookViewModel GetById(int id);
     public void DeleteBook(Book book);
+    public void Apdate(Book book);
 }

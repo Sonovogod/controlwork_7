@@ -33,4 +33,10 @@ public class BookValidationController : Controller
             return true;
         return false;
     }
+    
+    [AcceptVerbs("Get", "Post")]
+    public bool CheckCategory([Bind(Prefix = "Book.CategoryId")] int categoryId)
+    {
+        return _db.Categories.Any(x=> x.Id == categoryId);
+    }
 }

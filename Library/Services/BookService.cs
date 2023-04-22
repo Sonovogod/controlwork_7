@@ -18,7 +18,8 @@ public class BookService : IBookService
 
     public List<ShortBookViewModel> GetAll()
     {
-        return _db.Books.MapToShortBookViewModel();
+        List<ShortBookViewModel> books = _db.Books.OrderBy(x=> x.DateAdded).MapToShortBookViewModel().ToList();
+        return books;
     }
 
     public void Add(Book book)
@@ -43,6 +44,12 @@ public class BookService : IBookService
     public void DeleteBook(Book book)
     {
         book.States = BookStates.Deleted;
+        _db.Books.Update(book);
+        _db.SaveChanges();
+    }
+    
+    public void Apdate(Book book)
+    {
         _db.Books.Update(book);
         _db.SaveChanges();
     }

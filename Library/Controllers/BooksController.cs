@@ -39,7 +39,8 @@ public class BooksController : Controller
     [HttpPost]
     public IActionResult CreateBook(CreateBookViewModel createBookViewModel, IFormFile uploadedFile)
     {
-        if (ModelState.IsValid)
+        bool fileValid = _fileService.ValidFile(uploadedFile);
+        if (ModelState.IsValid && fileValid)
         {
             Book book = createBookViewModel.Book.MapToBookModel();
             book.ImgPath = _fileService.SaveFileAndGetPath(book, uploadedFile);
@@ -86,5 +87,19 @@ public class BooksController : Controller
         };
         
         return View(createBookViewModel);
+    }
+    
+    [HttpPost]
+    public IActionResult Edit(CreateBookViewModel createBookViewModel, IFormFile uploadedFile)
+    {
+        bool fileValid = _fileService.ValidFile(uploadedFile);
+        if (ModelState.IsValid && fileValid)
+        {
+            Book book = createBookViewModel.Book.MapToBookModel();
+            book.ImgPath = _fileService.SaveFileAndGetPath(book, uploadedFile);
+            _bookService.Apdate(book);
+            return RedirectToAction("Home");
+        }
+        return RedirectToAction("CreateBook");
     }
 }

@@ -13,7 +13,8 @@ public static class BookExtensions
             Title = b.Title,
             Author = b.Author,
             ImgPath = b.ImgPath,
-            States = b.States
+            States = b.States,
+            DateAdded = b.DateAdded
         }).ToList();
     }
     

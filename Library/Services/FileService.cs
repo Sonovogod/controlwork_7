@@ -32,4 +32,15 @@ public class FileService : IFileService
 
         return string.Empty;
     }
+
+    public bool ValidFile(IFormFile uploadedFile)
+    {
+        string fileName = uploadedFile.FileName;
+        FileInfo test = new FileInfo(fileName);
+        string ext = test.Extension;
+
+        if (ext == ".png" || ext == ".jpeg" || ext == ".jpg")
+            return true;
+        return false;
+    }
 }

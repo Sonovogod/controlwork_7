@@ -8,5 +8,6 @@ public class ShortBookViewModel
     public string Title { get; set; }
     public string Author { get; set; }
     public string ImgPath { get; set; }
+    public DateTime? DateAdded { get; set; }
     public BookStates? States { get; set; }
 }

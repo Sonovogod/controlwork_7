@@ -37,9 +37,6 @@ namespace Library.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("DateRelease")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -56,6 +53,9 @@ namespace Library.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("YearRelease")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

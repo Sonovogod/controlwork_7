@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Library.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20230422080141_changed field in Book(DateRelease)")]
-    partial class changedfieldinBookDateRelease
+    [Migration("20230422081837_new field in Book")]
+    partial class newfieldinBook
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,6 @@ namespace Library.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("DateRelease")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -59,6 +56,9 @@ namespace Library.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("YearRelease")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

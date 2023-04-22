@@ -6,30 +6,36 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Library.Migrations
 {
     /// <inheritdoc />
-    public partial class changedfieldinBookDateRelease : Migration
+    public partial class newfieldinBook : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
+            migrationBuilder.DropColumn(
                 name: "DateRelease",
+                table: "Books");
+
+            migrationBuilder.AddColumn<int>(
+                name: "YearRelease",
                 table: "Books",
                 type: "integer",
                 nullable: false,
-                oldClrType: typeof(DateTime),
-                oldType: "timestamp without time zone");
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.DropColumn(
+                name: "YearRelease",
+                table: "Books");
+
+            migrationBuilder.AddColumn<DateTime>(
                 name: "DateRelease",
                 table: "Books",
                 type: "timestamp without time zone",
                 nullable: false,
-                oldClrType: typeof(int),
-                oldType: "integer");
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
     }
 }

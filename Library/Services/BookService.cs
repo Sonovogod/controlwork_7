@@ -16,9 +16,9 @@ public class BookService : IBookService
         _db = db;
     }
 
-    public List<ShortBookViewModel> GetAll()
+    public IOrderedQueryable<Book> GetAllQueryable()
     {
-        List<ShortBookViewModel> books = _db.Books.OrderBy(x=> x.DateAdded).MapToShortBookViewModel().ToList();
+        IOrderedQueryable<Book> books = _db.Books.OrderByDescending(x => x.DateAdded);
         return books;
     }
 
@@ -48,7 +48,7 @@ public class BookService : IBookService
         _db.SaveChanges();
     }
     
-    public void Apdate(Book book)
+    public void Update(Book book)
     {
         _db.Books.Update(book);
         _db.SaveChanges();

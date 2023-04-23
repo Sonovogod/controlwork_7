@@ -12,7 +12,10 @@ public class BooksController : Controller
     private readonly ICategoryService _categoryService;
     private readonly IFileService _fileService;
 
-    public BooksController(IBookService bookService, ICategoryService categoryService, IFileService fileService)
+    public BooksController(
+        IBookService bookService, 
+        ICategoryService categoryService, 
+        IFileService fileService)
     {
         _bookService = bookService;
         _categoryService = categoryService;
@@ -20,10 +23,26 @@ public class BooksController : Controller
     }
 
     [HttpGet]
-    public IActionResult Home()
+    public IActionResult Home(int currentPage = 1)
     {
-        var books = _bookService.GetAll();
-        return View(books);
+        var books = _bookService.GetAllQueryable();
+        int pageSize = 8;
+        int count = books.Count();
+        var paginationBooks = books.Skip((currentPage - 1) * pageSize).Take(pageSize).MapToShortBookViewModel();
+        
+        
+        /*List<ShortBookViewModel> books = _bookService.GetAll();
+        int pageSize = 2;
+        int count = books.Count;
+        var filteredBook = books.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();*/
+
+        BooksPageViewModel booksPageViewModel = new BooksPageViewModel()
+        {
+            Books = paginationBooks,
+            Pagination = new PaginationViewModel(count, currentPage, pageSize)
+        };
+
+        return View(booksPageViewModel);
     }
 
     [HttpGet]
@@ -97,7 +116,7 @@ public class BooksController : Controller
         {
             Book book = createBookViewModel.Book.MapToBookModel();
             book.ImgPath = _fileService.SaveFileAndGetPath(book, uploadedFile);
-            _bookService.Apdate(book);
+            _bookService.Update(book);
             return RedirectToAction("Home");
         }
         return RedirectToAction("CreateBook");

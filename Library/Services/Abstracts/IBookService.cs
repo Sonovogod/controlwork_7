@@ -4,9 +4,9 @@ namespace Library.Services.Abstracts;
 
 public interface IBookService
 {
-    public List<ShortBookViewModel> GetAll();
+    public IOrderedQueryable<Book> GetAllQueryable();
     public void Add(Book book);
     public BookViewModel GetById(int id);
     public void DeleteBook(Book book);
-    public void Apdate(Book book);
+    public void Update(Book book);
 }

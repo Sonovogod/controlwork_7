@@ -21,11 +21,18 @@ public class UserService : IUserService
         _db.SaveChanges();
     }
 
-    public List<ShortBookViewModel> GetByMail(string mail)
+    public List<ShortBookViewModel> GetUserBooks(string mail)
     {
         List<ShortBookViewModel> books = _db.Books
             .Include(x => x.User)
-            .Where(x => x.User.Mail.ToUpper().Equals(mail.ToUpper())).MapToShortBookViewModel();
+            .Where(x => x.User.Mail.ToUpper().Equals(mail.ToUpper()))
+            .ToList().MapToShortBooksViewModel();
         return books;
+    }
+    
+    public User? GetByMail(string mail)
+    {
+        User? user = _db.Users.FirstOrDefault(x => x.Mail.ToUpper().Equals(mail.ToUpper()));
+        return user;
     }
 }

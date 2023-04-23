@@ -2,5 +2,5 @@ namespace Library.Services.ViewModels;
 
 public class UserCabinetViewModel
 {
-    public List<ShortBookViewModel> Books { get; set; }
+    public List<ShortBookViewModel> Book { get; set; }
 }

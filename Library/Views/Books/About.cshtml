@@ -1,5 +1,5 @@
 @using Library.Services.Enum
-@model BookViewModel
+@model AboutPageViewModel
 
 @{
     ViewBag.Title = "Подробнее";
@@ -9,21 +9,21 @@
 <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
     <div class="col">
         <div class="card h-100">
-            <img src="@Model.ImgPath" class="p-2 card-img-top" alt="@Model.Title">
+            <img src="@Model.Book.ImgPath" class="p-2 card-img-top" alt="@Model.Book.Title">
             <div class="card-body">
-                <h5 class="card-title">@Model.Title</h5>
-                <p>Автор: @Model.Author</p>
-                <p>Статус: @Model.States.GetDescription()</p>
-                <p>Описание: @Model.Description</p>
-                <p>Год выпуска: @Model.YearRelease</p>
-                <p>Категория: @Model.Category.Title</p>
+                <h5 class="card-title">@Model.Book.Title</h5>
+                <p>Автор: @Model.Book.Author</p>
+                <p>Статус: @Model.Book.States.GetDescription()</p>
+                <p>Описание: @Model.Book.Description</p>
+                <p>Год выпуска: @Model.Book.YearRelease</p>
+                <p>Категория: @Model.Book.Category.Title</p>
             </div>
             <div class="row px-3">
                 <div class="col-auto">
                     <a class="my-3 btn btn-outline-info"
                        asp-action="Edit"
                        asp-controller="Books"
-                       asp-route-id="@Model.Id">
+                       asp-route-id="@Model.Book.Id">
                         Изменить
                     </a>
                 </div>
@@ -31,15 +31,42 @@
                     <a class="my-3 btn btn-danger"
                        asp-action="Delete"
                        asp-controller="Books"
-                       asp-route-id="@Model.Id">
+                       asp-route-id="@Model.Book.Id">
                         Удалить
                     </a>
                 </div>
             </div>
             <div class="card-footer">
-                <small class="text-body-secondary">Добавлено: @Model.DateAdded</small>
+                <small class="text-body-secondary">Добавлено: @Model.Book.DateAdded</small>
             </div>
         </div>
     </div>
+    <div class="col align-self-center">
+        <form asp-action="TakeBook" method="post" asp-controller="Books">
+            <div class="row justify-content-md-center text-center">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label for="mail">Почтовый адрес</label>
+                        <input asp-for="AuthorUser.Mail"
+                               type="email"
+                               class="form-control"
+                               id="mail"
+                               placeholder="thony.montana@gmail.com">
+                        <span class="text-danger" asp-validation-for="AuthorUser.Mail"></span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="Book.Id" value="@Model.Book.Id"/>
+                <input type="hidden" asp-for="Book.Title" value="@Model.Book.Title"/>
+                <input type="hidden" asp-for="Book.Author" value="@Model.Book.Author"/>
+                <input type="hidden" asp-for="Book.Description" value="@Model.Book.Description"/>
+                <button type="submit" class="btn btn-primary">Взять книгу</button>
+            </div>
+        </form>
+    </div>
 </div>
-
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

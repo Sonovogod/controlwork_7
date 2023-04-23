@@ -9,4 +9,6 @@ public interface IBookService
     public BookViewModel GetById(int id);
     public void DeleteBook(Book book);
     public void Update(Book book);
+    public void TakeBook(Book book);
+    public void GiveBook(Book book);
 }

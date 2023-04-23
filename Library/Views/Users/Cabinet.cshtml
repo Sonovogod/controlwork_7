@@ -8,14 +8,14 @@
 }
 
 @{
-    if (!Model.Books.Any())
+    if (!Model.Book.Any())
     {
         <h2>Список книг пуст</h2>
     }
     else
     {
         <div class="row row-cols-1 row-cols-md-2 g-4">
-            @foreach(var book in Model.Books)
+            @foreach(var book in Model.Book)
             {
                 <div class="col">
                     <div class="card h-100">

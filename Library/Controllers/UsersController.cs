@@ -40,7 +40,7 @@ public class UsersController : Controller
     {
         UserCabinetViewModel userCabinetViewModel = new UserCabinetViewModel()
         {
-            Books = _userService.GetByMail(mail)
+            Book = _userService.GetUserBooks(mail)
         };
         return View(userCabinetViewModel);
     }

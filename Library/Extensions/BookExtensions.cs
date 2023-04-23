@@ -5,7 +5,7 @@ namespace Library.Extensions;
 
 public static class BookExtensions
 {
-    public static List<ShortBookViewModel> MapToShortBookViewModel(this IEnumerable<Book> self)
+    public static List<ShortBookViewModel> MapToShortBooksViewModel(this IEnumerable<Book> self)
     {
         return self.Select(b=> new ShortBookViewModel
         {
@@ -16,6 +16,20 @@ public static class BookExtensions
             States = b.States,
             DateAdded = b.DateAdded
         }).ToList();
+    }
+    
+    public static ShortBookViewModel MapToShortBookViewModel(this Book self)
+    {
+        return new ShortBookViewModel
+        {
+            Id = self.Id,
+            Title = self.Title,
+            Author = self.Author,
+            ImgPath = self.ImgPath,
+            States = self.States,
+            DateAdded = self.DateAdded,
+            User = self.User
+        };
     }
     
     public static Book MapToBookModel(this BookViewModel bookViewModel)

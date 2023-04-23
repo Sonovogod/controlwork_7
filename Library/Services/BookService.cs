@@ -44,13 +44,24 @@ public class BookService : IBookService
     public void DeleteBook(Book book)
     {
         book.States = BookStates.Deleted;
-        _db.Books.Update(book);
-        _db.SaveChanges();
+        Update(book);
     }
     
     public void Update(Book book)
     {
         _db.Books.Update(book);
         _db.SaveChanges();
+    }
+
+    public void TakeBook(Book book)
+    {
+        book.States = BookStates.OutOfStock;
+        Update(book);
+    }
+    
+    public void GiveBook(Book book)
+    {
+        book.States = BookStates.InStock;
+        Update(book);
     }
 }

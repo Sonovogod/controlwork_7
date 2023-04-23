@@ -6,5 +6,6 @@ namespace Library.Services.Abstracts;
 public interface IUserService
 {
     public void Add(User user);
-    public List<ShortBookViewModel> GetByMail(string mail);
+    public List<ShortBookViewModel> GetUserBooks(string mail);
+    public User? GetByMail(string mail);
 }

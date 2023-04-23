@@ -11,15 +11,17 @@ public class BooksController : Controller
     private readonly IBookService _bookService;
     private readonly ICategoryService _categoryService;
     private readonly IFileService _fileService;
+    private readonly IUserService _userService;
 
     public BooksController(
         IBookService bookService, 
         ICategoryService categoryService, 
-        IFileService fileService)
+        IFileService fileService, IUserService userService)
     {
         _bookService = bookService;
         _categoryService = categoryService;
         _fileService = fileService;
+        _userService = userService;
     }
 
     [HttpGet]
@@ -28,7 +30,7 @@ public class BooksController : Controller
         var books = _bookService.GetAllQueryable();
         int pageSize = 8;
         int count = books.Count();
-        var paginationBooks = books.Skip((currentPage - 1) * pageSize).Take(pageSize).MapToShortBookViewModel();
+        var paginationBooks = books.Skip((currentPage - 1) * pageSize).Take(pageSize).MapToShortBooksViewModel();
 
         BooksPageViewModel booksPageViewModel = new BooksPageViewModel()
         {
@@ -68,13 +70,31 @@ public class BooksController : Controller
     {
         BookViewModel? bookViewModel = _bookService.GetById(id);
         if (bookViewModel is null) return NotFound();
-
-        return View(bookViewModel);
+        
+        AboutPageViewModel aboutPageViewModel = new AboutPageViewModel()
+        {
+            Book = bookViewModel
+        };
+        return View(aboutPageViewModel);
     }
 
-    [HttpGet]
-    public IActionResult TakeBook(int id)
+    [HttpPost]
+    public IActionResult TakeBook(AboutPageViewModel aboutPageViewModel)
     {
+        if (ModelState.IsValid)
+        {
+            var userMail = aboutPageViewModel.AuthorUser.Mail;
+            var userBooks = _userService.GetUserBooks(userMail);
+            if (userBooks.Count > 2)
+                return View(new {message = "У вас закончился лимит на книги"});
+            
+
+            BookViewModel book = _bookService.GetById(aboutPageViewModel.Book.Id);
+            var user = _userService.GetByMail(userMail);
+            book.User = user;
+            _bookService.TakeBook(book.MapToBookModel());
+            return RedirectToAction("Cabinet", "Users", new {mail = userMail});
+        }
         return NotFound();
     }
     

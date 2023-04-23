@@ -1,0 +1,51 @@
+@using Library.Services.Enum
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model UserCabinetViewModel
+
+@{
+    ViewBag.Title = "Взятые книги";
+    Layout = "_Layout";
+}
+
+@{
+    if (!Model.Books.Any())
+    {
+        <h2>Список книг пуст</h2>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach(var book in Model.Books)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@book.ImgPath" class="p-2 card-img-top" alt="@book.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p>Автор: @book.Author</p>
+                            <p>Статус: @book.States.GetDescription()</p>
+                        </div>
+                        <div class="row px-3">
+                            <div class="col-auto">
+                                <a class="my-3 btn btn-success"
+                                   asp-action="GiveBook"
+                                   asp-controller="Books"
+                                   asp-route-id="@book.Id">
+                                    Сдать книгу
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <a class="my-3 btn btn-outline-info"
+                                   asp-action="About"
+                                   asp-controller="Books"
+                                   asp-route-id="@book.Id">
+                                    Подробнее
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

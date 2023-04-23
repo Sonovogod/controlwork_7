@@ -1,0 +1,11 @@
+@model CreateUserViewModel
+
+@{
+    ViewBag.Title = "Успешная регистрация";
+    Layout = "_Layout";
+}
+<div class="align-content-center text-center">
+    <h2 class="bg-info">Поздравляем с успешной регистрацией</h2>
+    <p class="text-center fs-3">@Model.User.Name</p>
+</div>
+

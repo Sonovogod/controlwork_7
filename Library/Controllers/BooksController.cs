@@ -29,12 +29,6 @@ public class BooksController : Controller
         int pageSize = 8;
         int count = books.Count();
         var paginationBooks = books.Skip((currentPage - 1) * pageSize).Take(pageSize).MapToShortBookViewModel();
-        
-        
-        /*List<ShortBookViewModel> books = _bookService.GetAll();
-        int pageSize = 2;
-        int count = books.Count;
-        var filteredBook = books.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();*/
 
         BooksPageViewModel booksPageViewModel = new BooksPageViewModel()
         {
@@ -80,6 +74,12 @@ public class BooksController : Controller
 
     [HttpGet]
     public IActionResult TakeBook(int id)
+    {
+        return NotFound();
+    }
+    
+    [HttpGet]
+    public IActionResult GiveBook(int id)
     {
         return NotFound();
     }

@@ -86,22 +86,49 @@ public class BooksController : Controller
             var userMail = aboutPageViewModel.AuthorUser.Mail;
             var userBooks = _userService.GetUserBooks(userMail);
             if (userBooks.Count > 2)
-                return View(new {message = "У вас закончился лимит на книги"});
+                return View();
             
 
             BookViewModel book = _bookService.GetById(aboutPageViewModel.Book.Id);
+            if (book.UserId != null)
+                return NotFound();
             var user = _userService.GetByMail(userMail);
-            book.User = user;
+            book.UserId = user.Id;
             _bookService.TakeBook(book.MapToBookModel());
             return RedirectToAction("Cabinet", "Users", new {mail = userMail});
         }
+        return NotFound();
+    }
+
+    [HttpPost]
+    public IActionResult TakeBookFromHome(BooksPageViewModel booksPageViewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var userMail = booksPageViewModel.AuthorUser.Mail;
+            var userBooks = _userService.GetUserBooks(userMail);
+            if (userBooks.Count > 2)
+                return View("TakeBook");
+            
+            BookViewModel book = _bookService.GetById(booksPageViewModel.BookId);
+            if (book.UserId != null)
+                return NotFound();
+            var user = _userService.GetByMail(userMail);
+            book.UserId = user.Id;
+            _bookService.TakeBook(book.MapToBookModel());
+            return RedirectToAction("Cabinet", "Users", new {mail = userMail});
+        }
+
         return NotFound();
     }
     
     [HttpGet]
     public IActionResult GiveBook(int id)
     {
-        return NotFound();
+        Book book = _bookService.GetById(id).MapToBookModel();
+        if (book is null) return NotFound();
+        _bookService.GiveBook(book);
+        return View();
     }
     
     [HttpGet]

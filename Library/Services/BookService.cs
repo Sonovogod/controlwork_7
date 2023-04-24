@@ -62,6 +62,7 @@ public class BookService : IBookService
     public void GiveBook(Book book)
     {
         book.States = BookStates.InStock;
+        book.UserId = null;
         Update(book);
     }
 }

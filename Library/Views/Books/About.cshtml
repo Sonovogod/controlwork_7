@@ -1,4 +1,5 @@
 @using Library.Services.Enum
+@using Library.Enums
 @model AboutPageViewModel
 
 @{
@@ -59,7 +60,14 @@
                 <input type="hidden" asp-for="Book.Title" value="@Model.Book.Title"/>
                 <input type="hidden" asp-for="Book.Author" value="@Model.Book.Author"/>
                 <input type="hidden" asp-for="Book.Description" value="@Model.Book.Description"/>
-                <button type="submit" class="btn btn-primary">Взять книгу</button>
+                @if (Model.Book.States == BookStates.OutOfStock)
+                {
+                    <button type="submit" class="btn btn-primary" disabled>Взять книгу</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Взять книгу</button>
+                }
             </div>
         </form>
     </div>

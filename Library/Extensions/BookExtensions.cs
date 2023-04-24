@@ -60,6 +60,7 @@ public static class BookExtensions
             CategoryId = book.CategoryId,
             DateAdded = book.DateAdded,
             User = book.User,
+            UserId = book.UserId,
             Author = book.Author,
             ImgPath = book.ImgPath,
             States = book.States,

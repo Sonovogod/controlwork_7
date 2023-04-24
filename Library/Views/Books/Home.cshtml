@@ -1,4 +1,5 @@
 @using Library.Services.Enum
+@using Library.Enums
 @model BooksPageViewModel
 
 @{
@@ -26,12 +27,53 @@
                         </div>
                         <div class="row px-3">
                             <div class="col-auto">
-                                <a class="my-3 btn btn-success"
-                                   asp-action="TakeBook"
-                                   asp-controller="Books"
-                                   asp-route-id="@book.Id">
-                                    Получить
-                                </a>
+                                @if (@book.States == BookStates.OutOfStock)
+                                {
+                                    <a class="my-3 btn btn-success disabled"
+                                       asp-action="TakeBook"
+                                       asp-controller="Books"
+                                       aria-disabled="true">
+                                        Получить
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button type="button" class="my-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#take">
+                                        Получить
+                                    </button>
+                                    <div class="modal fade" id="take" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Введите почтовый адрес, чтобы получить книгу</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form asp-action="TakeBookFromHome" method="post" asp-controller="Books">
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group mb-3">
+                                                                    <label for="mail">Почтовый адрес</label>
+                                                                    <input asp-for="AuthorUser.Mail"
+                                                                           type="email"
+                                                                           class="form-control"
+                                                                           id="mail"
+                                                                           placeholder="thony.montana@gmail.com">
+                                                                    <span class="text-danger" asp-validation-for="AuthorUser.Mail"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" asp-for="@Model.BookId" value="@book.Id"/>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                        <button type="submit" class="btn btn-primary">Получить</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <div class="col-auto">
                                 <a class="my-3 btn btn-outline-info"

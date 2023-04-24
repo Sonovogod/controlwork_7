@@ -65,4 +65,14 @@ public class BookService : IBookService
         book.UserId = null;
         Update(book);
     }
+
+    public List<BookViewModel> GetAllTakenBook()
+    {
+        IQueryable<Book> books = _db.Books
+            .Include(x => x.User)
+            .Include(x => x.Category)
+            .Where(x => x.States == BookStates.OutOfStock);
+        List<BookViewModel> bookViewModels = books.MapToBookViewModel();
+        return bookViewModels;
+    }
 }

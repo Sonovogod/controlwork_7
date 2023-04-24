@@ -168,4 +168,11 @@ public class BooksController : Controller
         }
         return RedirectToAction("CreateBook");
     }
+
+    [HttpGet]
+    public IActionResult AllTakenBook()
+    {
+        List<BookViewModel> books = _bookService.GetAllTakenBook();
+        return View(books);
+    }
 }

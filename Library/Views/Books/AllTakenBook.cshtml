@@ -1,0 +1,34 @@
+@using Library.Services.Enum
+@model System.Collections.Generic.List<Library.Services.ViewModels.BookViewModel>
+
+@{
+    ViewBag.Title = "Все выданные книги";
+    Layout = "_Layout";
+}
+
+@{
+    if (!Model.Any())
+    {
+        <h2>Список выданных книг пуст</h2>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach(var book in Model)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@book.ImgPath" class="p-2 card-img-top" alt="@book.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p>Автор: @book.Author</p>
+                            <p>Взял: @book.User.Name @book.User.Surname</p>
+                            <p>Статус: @book.States.GetDescription()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+

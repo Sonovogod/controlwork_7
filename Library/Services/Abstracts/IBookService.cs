@@ -11,4 +11,5 @@ public interface IBookService
     public void Update(Book book);
     public void TakeBook(Book book);
     public void GiveBook(Book book);
+    public List<BookViewModel> GetAllTakenBook();
 }

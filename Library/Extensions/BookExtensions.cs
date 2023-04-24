@@ -17,21 +17,24 @@ public static class BookExtensions
             DateAdded = b.DateAdded
         }).ToList();
     }
-    
-    public static ShortBookViewModel MapToShortBookViewModel(this Book self)
+    public static List<BookViewModel> MapToBookViewModel(this IEnumerable<Book> self)
     {
-        return new ShortBookViewModel
+        return self.Select(b=> new BookViewModel
         {
-            Id = self.Id,
-            Title = self.Title,
-            Author = self.Author,
-            ImgPath = self.ImgPath,
-            States = self.States,
-            DateAdded = self.DateAdded,
-            User = self.User
-        };
+            Id = b.Id,
+            Title = b.Title,
+            Description = b.Description,
+            Author = b.Author,
+            YearRelease = b.YearRelease,
+            CategoryId = b.CategoryId,
+            ImgPath = b.ImgPath,
+            DateAdded = b.DateAdded,
+            States = b.States,
+            UserId = b.UserId,
+            User = b.User
+        }).ToList();
     }
-    
+
     public static Book MapToBookModel(this BookViewModel bookViewModel)
     {
         return new Book()
